@@ -2,6 +2,8 @@
 
 Estudando a API Payment Request
 
+![First checkout using Payment Request API](/img/image-first-checkout.jpg)
+
 ## Referências para estudo
 
 - [Especificação W3C - Payment Request API](https://w3c.github.io/payment-request/)
