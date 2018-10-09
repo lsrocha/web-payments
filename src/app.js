@@ -18,6 +18,25 @@
                     }
                 }
             ],
+            shippingOptions: [
+                {
+                    id: 'retirada',
+                    label: 'Retirar no Quiosque (Grátis)',
+                    amount: {
+                        currency: 'BRL',
+                        value: '0'
+                    },
+                    selected: true
+                },
+                {
+                    id: 'envio',
+                    label: 'Delivery',
+                    amount: {
+                        currency: 'BRL',
+                        value: '1.50'
+                    }
+                }
+            ],
             total: {
                 label: 'Total',
                 amount: {
@@ -45,10 +64,12 @@
             requestPayerEmail: true,
             requestPayerName: true,
             requestPayerPhone: false,
-            requestShipping: false
+            requestShipping: true
         };
 
         const request = new PaymentRequest(method, items, options);
+        request.addEventListener('shippingoptionchange', handleShippingMethodChange);
+
         const response = await request.show();
 
         await processPaymentResponse(response);
@@ -57,5 +78,13 @@
     async function processPaymentResponse(response) {
         console.log(response);
         response.complete('success');
+    }
+
+    async function handleShippingMethodChange(event) {
+        console.log(event.currentTarget);
+        event.updateWith({ total: { amount: {
+            currency: 'BRL',
+            value: '1.50'
+        }, label: 'Total'}});
     }
 })();
